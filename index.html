@@ -48,13 +48,10 @@
         });
         var ReadImage = function (file) {
             var reader = new FileReader;
-            console.log("hhhhhhhhhhhhhhhhhh");
 
             var image = new Image;
-            console.log("hhhhhhhhhhhhhhhhhh");
             reader.readAsDataURL(file);
             reader.onload = function (_file) {
-                console.log("hhhhhhhhhhhhhhhhhh");
 
                 image.src = _file.target.result;
                 image.onload = function () {
