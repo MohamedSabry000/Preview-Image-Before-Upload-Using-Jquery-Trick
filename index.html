@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Sherif Elkady">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Preview Image Before Upload Using Jquery </title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    
+</head>
+<body>
+    <form id="myForm" action="/" method="POST">
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="btn btn-primary">
+                    <input type="file" id="ImageBrowse" />
+                </div>
+                <div class="col-md-4">
+                    <div id="imagePreview" class="thumbnail" style="display:none">
+                        <img class="img-responsive" id="targetIMG" />
+                        <div class="caption">
+                            <a href="#" onclick="ClearPreview();"><i class="glyphicon glyphicon-trash"></i></a>
+                            <p id="description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#ImageBrowse").change(function () {
+                var file = this.files;
+
+                if (file && file[0]) {
+                    ReadImage(file[0]);
+                }
+            })
+        });
+        var ReadImage = function (file) {
+            var reader = new FileReader;
+            console.log("hhhhhhhhhhhhhhhhhh");
+
+            var image = new Image;
+            console.log("hhhhhhhhhhhhhhhhhh");
+            reader.readAsDataURL(file);
+            reader.onload = function (_file) {
+                console.log("hhhhhhhhhhhhhhhhhh");
+
+                image.src = _file.target.result;
+                image.onload = function () {
+                    var height = this.height;
+                    var width = this.width;
+                    var type = file.type;
+                    var size = ~~(file.size / 1024) + "KB";
+                    
+                    $("#targetIMG").attr('src', _file.target.result);
+                    $("#description").text("Size: " + size + ", " + height + " X " + width)
+                    $("#imagePreview").show();
+                }
+            }
+        }
+
+        var ClearPreview = function () {
+            $("#ImageBrowse").val("");
+            $("#description").text("");
+            $("#imagePreview").hide();
+        }
+    </script>
+</body>
+</html>
